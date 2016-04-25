@@ -8,35 +8,35 @@ typedef pair<int, int> ii;
 typedef pair<int, ii> iii;
 typedef pair<double, ii> dii;
 
-ii pos[26];
-double dist[26][26];
-int demand[26][26];
-bool used[26][26];
+ii pos[5];
+double dist[5][5];
+int demand[5][5];
+bool used[5][5];
 
-int flow[26][26];
+int flow[5][5];
 
 priority_queue<iii> pq;
 priority_queue<dii> pqdist;
 
 int main() {
-  for(int i = 1; i < 26; i++)
-    for(int j = 1; j < 26; j++)
+  for(int i = 1; i < 5; i++)
+    for(int j = 1; j < 5; j++)
       used[i][j] = false;
   
-  for(int i = 1; i < 26; i++)
+  for(int i = 1; i < 5; i++)
     memset(flow[i], 0, sizeof(flow[i]));
   
   double cost = 0;
   
-  for(int i = 1; i < 26; i++)
+  for(int i = 1; i < 5; i++)
     cin >> pos[i].F >> pos[i].S;
   
-  for(int i = 1; i < 26; i++)
-    for(int j = 1; j < 26; j++)
+  for(int i = 1; i < 5; i++)
+    for(int j = 1; j < 5; j++)
       dist[i][j] = sqrt((pos[i].F - pos[j].F) * (pos[i].F - pos[j].F) + (pos[i].S - pos[j].S) * (pos[i].S - pos[j].S));
   
-  for(int i = 1; i < 26; i++)
-    for(int j = 1; j < 26; j++) {
+  for(int i = 1; i < 5; i++)
+    for(int j = 1; j < 5; j++) {
       cin >> demand[i][j];
       pq.push(iii(demand[i][j], ii(i, j)));
     }
@@ -57,8 +57,8 @@ int main() {
   while(!pq.empty())
     pq.pop();
   
-  for(int i = 1; i < 26; i++)
-    for(int j = 1; j < 26; j++)
+  for(int i = 1; i < 5; i++)
+    for(int j = 1; j < 5; j++)
       if(i != j)
 	if(!used[i][j])
 	  pqdist.push(dii(-dist[i][j], ii(i, j)));
@@ -91,7 +91,7 @@ int main() {
       if(disp == 0)
 	continue;
       
-      for(int k = 1; k < 26; k++) {	
+      for(int k = 1; k < 5; k++) {	
 	if(disp == 0)
 	  break;
 
@@ -135,18 +135,18 @@ int main() {
     }    
   }
   
-  for(int i = 1; i < 26; i++) {
-    for(int j = 1; j < 26; j++) {
+  for(int i = 1; i < 5; i++) {
+    for(int j = 1; j < 5; j++) {
       cost += dist[i][j] * flow[i][j];
       if(used[i][j])
 	cost += 1000;
-      
+            
       //cout << "demand " << i << " " << j << ": " << demand[i][j] << endl;
     }
   }
 
-  for(int i = 1; i < 26; i++) {
-    for(int j = 1; j < 26; j++) {
+  for(int i = 1; i < 5; i++) {
+    for(int j = 1; j < 5; j++) {
       cout << "flow " << i << " " << j << ": " << flow[i][j] << endl;
     }
   }
